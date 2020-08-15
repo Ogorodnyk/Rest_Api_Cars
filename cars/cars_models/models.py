@@ -14,7 +14,7 @@ RATE = (
 class Car(models.Model):
     car_make = models.CharField(max_length=120)
     model_name = models.CharField(max_length=120)
-    rate = models.FloatField(choices=RATE)
+    rate = models.IntegerField(choices=RATE)
 
     def __str__(self):
-        return self.name
+        return F"{self.car_make} {self.model_name}"

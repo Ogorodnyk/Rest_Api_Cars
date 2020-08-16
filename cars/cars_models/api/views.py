@@ -5,7 +5,9 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 
 from cars_models.models import Car
-from cars_models.api.serializers import CarSerializer
+from cars_models.api.serializers import CarSerializer, CarPopularSerializer
+from django.db.models.functions import Length
+
 
 
 @api_view(["GET", "POST"])
@@ -52,8 +54,8 @@ def car_detail_api_view(request, pk):
 @api_view(["GET"])
 def car_list_popular_api_view(request):
     if request.method == "GET":
-        cars = Car.objects.order_by("-rate")
-        serializer = CarSerializer(cars, many=True)
+        popular_cars = Car.objects.order_by('-rate')
+        serializer = CarPopularSerializer(popular_cars, many=True)
         return Response(serializer.data)
 
 
@@ -62,8 +64,8 @@ def car_list_popular_api_view(request):
 class CarListCreateAPIView(APIView):
 
     def get(self, request, format=None):
-        movies = Car.objects.all()
-        serializer = CarSerializer(movies, many=True)
+        car = Car.objects.all()
+        serializer = CarSerializer(car, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

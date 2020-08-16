@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from cars_models.models import Car, CarRate
-from django.db.models import Sum,Avg,Max,Min,Count,F,Q
+from django.db.models import Sum, Avg, Max, Min, Count, F, Q
+from django.db.models import OuterRef
+
 
 # class CarSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
@@ -21,13 +23,22 @@ from django.db.models import Sum,Avg,Max,Min,Count,F,Q
 
 class CarSerializer(serializers.ModelSerializer):
     average_rates = serializers.SerializerMethodField()
+
     class Meta:
         model = Car
-        fields = ('car_make', 'model_name', 'average_rates')
+        fields = ('id', 'car_make', 'model_name', 'average_rates')
 
     def get_average_rates(self, obj):
         average_rates = Car.objects.all().aggregate(average_rates=Avg('rate'))
         return average_rates["average_rates"]
+
+
+class CarPopularSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Car
+        fields = ('id', 'car_make', 'model_name', 'rate')
+
 
 class CarRateSerializer(serializers.ModelSerializer):
     class Meta:

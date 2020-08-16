@@ -61,19 +61,16 @@ def car_list_popular_api_view(request):
 
 class CarListCreateAPIView(APIView):
 
-    def get(self, request):
-        cars = Car.objects.all()
-        # rates = CarRates.objects.all()
-        cars_serializer = CarSerializer(cars, many=True)
-        # rates_serializer = CarRatesSerializer(rates, many=True)
-        response = cars_serializer.data
-        return Response(response)
+    def get(self, request, format=None):
+        movies = Car.objects.all()
+        serializer = CarSerializer(movies, many=True)
+        return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request, format=None):
         serializer = CarSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

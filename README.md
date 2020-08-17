@@ -1,7 +1,7 @@
  REST API CARS
 
 
-Application URL 
+Application URL https://car-rest-api.herokuapp.com/
 
 Prerequisites
 To start you have to have installed Python 3.8

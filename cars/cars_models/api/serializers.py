@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from cars_models.models import Car, CarRate
-from django.db.models import Sum, Avg, Max, Min, Count, F, Q
-from django.db.models import OuterRef
+from cars_models.models import Car, CarRate, GiveRate
+from django.db.models import  Avg
+
 
 
 # class CarSerializer(serializers.Serializer):
@@ -42,5 +42,5 @@ class CarPopularSerializer(serializers.ModelSerializer):
 
 class CarRateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CarRate
-        fields = ('rate')
+        model = GiveRate
+        fields = ('care_rate_id', 'car_id')
